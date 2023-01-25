@@ -2,6 +2,7 @@
 
 // global variables for canvas and context
 var game, canvas, ctx;
+var user, password; //user input user and password, send to server
 window.onload = init;//  After the window has been loaded, go to init
 
 function init(){
@@ -13,6 +14,11 @@ function init(){
   ctx = canvas.getContext('2d'); // This is the context
   game = new Game();
   animate();
+  const req = new XMLHttpRequest();
+req.addEventListener("load", reqListener);
+req.open("GET", url, async, user, password);
+req.send();
+//open(method, url, async)
 }
 
 
@@ -22,5 +28,15 @@ function animate(){
   game.update()
   requestAnimationFrame(animate);
 }
+
+function reqListener() {
+  console.log(this.responseText);
+}
+
+function draw() {
+   
+}
+
+
 
   
