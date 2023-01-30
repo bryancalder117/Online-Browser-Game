@@ -21,7 +21,7 @@ function GameArea(){
        this.tiles[i] = document.createElement("div");
        this.tileMenuDiv.appendChild(this.tiles[i]);
        this.tiles[i].setAttribute("class", "tile");
-       this.tileText[i] = document.createTextNode("Tile " + (i + 1) + "");
+       this.tileText[i] = document.createTextNode("Candidate " + (i + 1) + "");
        //this.t1Text.style.padding = "10px";
        this.tiles[i].appendChild(this.tileText[i]);
     }

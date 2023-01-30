@@ -1,17 +1,35 @@
 <!DOCTYPE html>
 <html>
+  
   <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/addons/p5.sound.min.js"></script>
+   
     <title>Lab 117 Start Code</title>
     <link rel="stylesheet" type="text/css" href="mystyles.css">
     <script src="main.js"></script>
+    <script src="jsvector.js"></script>
     <script src="gamearea.js"></script>
     <script src="game.js"></script>
     <script src="ragdoll.js"></script>
   </head>
-
+  
   <body>
     <div id = "wrapperDiv"></div>
+    <canvas id="cnv" width="800" height="600"></canvas>
   </body>
+  <script>
+    function coordinate(event) {
+        var x=event.clientX;
+        var y=event.clientY;
+        document.getElementById("X").value=x;
+        document.getElementById("Y").value=y;
+    }
+</script>
+<body onmousemove="coordinate(event)">
+  X-coordinate
+  <input type="text" id="X">
+  <br>
+  <br>
+  Y-coordinate
+  <input type="text" id="Y">
+</body>
 </html>
