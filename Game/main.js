@@ -1,87 +1,84 @@
 
-// wait for the page to finish loading with init as the callback
-//window.addEventListener("load", init);
-// global variables for canvas and context
+
+const {Engine, World, Bodies, Mouse, MouseConstraint, Constraint} = Matter;
+let world, engine, mConstraint;
+//const boxes = [];
+let bird
+let ground
+let birdimg;
 var game, canvas, ctx;
 var context;
 var user, password; //user input user and password, send to server
 window.onload = init;//  After the window has been loaded, go to init
-var ballX = 400;
-var ballY = 400;
-var mouseX = 0;
-var mouseY = 0;
 
-const box = document.querySelector(".box");
-const pageX = document.getElementById("x");
-const pageY = document.getElementById("y");
+var x = 0;
+var y = 0;
 
+function preload(){
+  birdimg = loadImage('assets/redBird.png');
+ 
+}
 function init(){
 
-  // canvas = document.createElement('canvas');
-  // canvas.style.border = 'solid black 2px';
-  // canvas.style.backgroundColor = 'rgba(0,0,0, .95)';
-  // canvas.width = 1096;  // 800 - 4 for the border
-  // canvas.height = 696; // 700 - 4 for the border
-  // ctx = canvas.getContext('2d'); // This is the context
+  engine = Engine.create();
+  world = engine.world;
+  console.log(Matter);
 
    // https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement
    canvas = document.getElementById("cnv");
    // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D
    context = canvas.getContext("2d");
-   document.getElementById("wrapperDiv").onmouseover = mouseMove;
-  setInterval("moveBall()", 100);
+   bird = new Bird(canvas.width/2, canvas.height/2, 25);
+   ground = new Ground(canvas.width/2, canvas.height - 10, canvas.width, 20);
   game = new Game();
-  //updateDisplay();
+  drawBall();
   draw();
   animate();
-  mouseMove();
-  moveBall();
- //coordinate();
-
+  mouseMoveHandler();
+ 
+ 
 // const req = new XMLHttpRequest();
 // req.addEventListener("load", reqListener);
 // req.open("GET", url, async, user, password); //insert ulr later
-// req.send();
+// req.send();\
 
-}
-function mouseMove(event) {
-  mouseX = event.clientX;
-  mouseY = event.clientY;
-}
 
-function moveBall() {
-  if (ballX > mouseX) {
-    ballX -= 5;
-  } else {
-    ballX += 5;
+function mouseMoveHandler(e) {
+  document.addEventListener("mousemove", mouseMoveHandler, false);
+  const relativeX = e.clientX - canvas.offsetLeft;
+  const relativeY = e.clientY - canvas.offsetLeft;
+  if (relativeX > 0 && relativeX < canvas.width) {
+    x = relativeX;
   }
-  if (ballY > mouseY) {
-    ballY -= 5;
-  } else {
-    ballY += 5;
+  if (relativeY > 0 && relativeY < canvas.width) {
+    y = relativeY;
   }
+}
+}
+function drawBall(){
+  let radius = 15;
+  context.beginPath();
+  context.arc(x, y, radius, 0, 2 * Math.PI);
+  context.strokeStyle = "black";
+  context.fillStyle =  "blue";
+  context.fill();
+  context.stroke();
+  context.closePath();
 }
 
 function animate() {
-
-  //ctx.fillStyle = 'rgba(0,0,0,.05)'
-  //ctx.fillRect(0,0,canvas.width,canvas.height); 
-  game.update()
+ game.update()
+ 
   draw();     // render
   requestAnimationFrame(animate);
  
 }
 
 function draw(event){
-//  x = MouseEvent.pageX;
- // y = MouseEvent.pageY;
-  let radius = 15;
-  context.beginPath();
-  context.arc(ballX, ballY, radius, 0, 2 * Math.PI);
-  context.strokeStyle = "black";
-  context.fillStyle =  "blue";
-  context.fill();
-  context.stroke();
+  Matter.Engine.update(engine);
+  bird.show();
+  ground.show();
+  drawBall();
 }
 
 

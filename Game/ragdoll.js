@@ -1,3 +1,0 @@
-function ragDoll(x, y){
-   
-}
